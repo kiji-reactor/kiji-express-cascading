@@ -12,8 +12,18 @@ import org.kiji.schema.KijiColumnName;
 @ApiStability.Experimental
 public class ColumnOutputSpecBuilders {
 
+  /** Dummy super-class for column output spec builders. */
+  public static abstract class ColumnOutputSpecBuilder {
+    /**
+     * Build a new ColumnOutputSpec from the values stored in this builder.
+     *
+     * @return a new ColumnOutputSpec from the values stored in this builder.
+     */
+    public abstract ColumnOutputSpec build();
+  }
+
   /** Builder for {@link QualifiedColumnOutputSpec}. */
-  public static final class QualifiedColumnOutputSpecBuilder {
+  public static final class QualifiedColumnOutputSpecBuilder extends ColumnOutputSpecBuilder {
 
     /**
      * Initializes a new empty QualifiedColumnOutputSpecBuilder.
@@ -188,14 +198,12 @@ public class ColumnOutputSpecBuilders {
     public QualifiedColumnOutputSpec build() {
       final KijiColumnName column = Preconditions.checkNotNull(mColumn,
           "Output column may not be null.");
-      final SchemaSpec schemaSpec = (null != mSchemaSpec)
-          ? mSchemaSpec : QualifiedColumnOutputSpec$.MODULE$.DEFAULT_SCHEMA_SPEC();
-      return QualifiedColumnOutputSpec.apply(column.getName(), schemaSpec);
+      return QualifiedColumnOutputSpec.apply(column.getName(), mSchemaSpec);
     }
   }
 
   /** Builder for {@link ColumnFamilyOutputSpec}. */
-  public static final class ColumnFamilyOutputSpecBuilder {
+  public static final class ColumnFamilyOutputSpecBuilder extends ColumnOutputSpecBuilder {
 
     /**
      * Initializes a new empty ColumnFamilyOutputSpecBuilder.
@@ -388,9 +396,7 @@ public class ColumnOutputSpecBuilders {
           Preconditions.checkNotNull(mFamily, "Output column family may not be null.");
       final String qualifierSelector =
           Preconditions.checkNotNull(mQualifierSelector, "Qualifier selector may not be null.");
-      final SchemaSpec schemaSpec = (null != mSchemaSpec)
-          ? mSchemaSpec : ColumnFamilyOutputSpec$.MODULE$.DEFAULT_SCHEMA_SPEC();
-      return ColumnFamilyOutputSpec$.MODULE$.construct(family, qualifierSelector, schemaSpec);
+      return ColumnFamilyOutputSpec$.MODULE$.construct(family, qualifierSelector, mSchemaSpec);
     }
   }
 }
