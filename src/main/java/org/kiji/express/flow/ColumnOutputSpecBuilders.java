@@ -10,9 +10,9 @@ import org.kiji.schema.KijiColumnName;
 
 @ApiAudience.Public
 @ApiStability.Experimental
-public class ColumnOutputSpecBuilders {
+public final class ColumnOutputSpecBuilders {
 
-  /** Dummy super-class for column output spec builders. */
+  /** Super-class for column output spec builders. */
   public static abstract class ColumnOutputSpecBuilder {
     /**
      * Build a new ColumnOutputSpec from the values stored in this builder.
@@ -195,6 +195,7 @@ public class ColumnOutputSpecBuilders {
      *
      * @return a new QualifiedColumnOutputSpec from the values stored in this builder.
      */
+    @Override
     public QualifiedColumnOutputSpec build() {
       final KijiColumnName column = Preconditions.checkNotNull(mColumn,
           "Output column may not be null.");
@@ -232,7 +233,7 @@ public class ColumnOutputSpecBuilders {
 
     /**
      * Private constructor, use {@link #create()} or
-     * {@link #copy(org.kiji.express.flow.ColumnOutputSpecBuilders.ColumnFamilyOutputSpecBuilder)}.
+     * {@link #copy(ColumnOutputSpecBuilders.ColumnFamilyOutputSpecBuilder)}.
      *
      * @param toCopy builder to copy or null to make an empty builder.
      */
@@ -391,6 +392,7 @@ public class ColumnOutputSpecBuilders {
      *
      * @return a new ColumnFamilyOutputSpec from the values stored in this builder.
      */
+    @Override
     public ColumnFamilyOutputSpec build() {
       final String family =
           Preconditions.checkNotNull(mFamily, "Output column family may not be null.");

@@ -13,7 +13,7 @@ import org.kiji.schema.filter.KijiColumnFilter;
 @ApiStability.Experimental
 public class ColumnInputSpecBuilders {
 
-  /** Dummy super-class for column input spec builders. */
+  /** Super-class for column input spec builders. */
   public static abstract class ColumnInputSpecBuilder {
     /**
      * Build a new ColumnInputSpec from the values stored in this builder.
@@ -329,14 +329,14 @@ public class ColumnInputSpecBuilders {
       // TODO(shashir): This construct method needs to be implemented in ColumnInputSpec.
       return QualifiedColumnInputSpec.construct(
           mColumn,
-          mSchemaSpec,
           mMaxVersions,
           mColumnFilterSpec,
-          mPagingSpec);
+          mPagingSpec,
+          mSchemaSpec);
     }
   }
 
-  
+
   /** Builder for {@link ColumnFamilyInputSpec}. */
   public static final class ColumnFamilyInputSpecBuilder extends ColumnInputSpecBuilder {
     /**
@@ -641,10 +641,10 @@ public class ColumnInputSpecBuilders {
       // TODO(shashir): This construct method needs to be implemented in ColumnInputSpec.
       return ColumnFamilyInputSpec.construct(
           mColumn,
-          mSchemaSpec,
           mMaxVersions,
           mColumnFilterSpec,
-          mPagingSpec);;
+          mPagingSpec,
+          mSchemaSpec);
     }
   }
 }
