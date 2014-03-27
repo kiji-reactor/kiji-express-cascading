@@ -39,7 +39,7 @@ public final class TapBuilder {
   }
 
   private KijiURI mTableURI = null;
-  private TimeRange mTimeRange = null;
+  private TimeRangeSpec mTimeRange = null;
   private String mTimestampField = null;
   private Map<String, ColumnInputSpec> mInputColumns = Maps.newHashMap();
   private Map<String, ColumnOutputSpec> mOutputColumns = Maps.newHashMap();
@@ -94,7 +94,7 @@ public final class TapBuilder {
    * @return this.
    */
   public TapBuilder withTimeRange(
-      final TimeRange timeRange
+      final TimeRangeSpec timeRange
   ) {
     Preconditions.checkNotNull(timeRange, "Time range may not be null.");
     Preconditions.checkState(null == mTimeRange, "Time range already set to: " + mTimeRange);
@@ -113,7 +113,7 @@ public final class TapBuilder {
       final long endTime
   ) {
     Preconditions.checkState(null == mTimeRange, "Time range already set to: " + mTimeRange);
-    mTimeRange = Before$.MODULE$.apply(endTime);
+    mTimeRange = new TimeRangeSpec.Before(endTime);
     return this;
   }
 
@@ -124,11 +124,11 @@ public final class TapBuilder {
    *     (exclusive)
    * @return this.
    */
-  public TapBuilder withTimeAfter(
+  public TapBuilder withTimeFrom(
       final long startTime
   ) {
     Preconditions.checkState(null == mTimeRange, "Time range already set to: " + mTimeRange);
-    mTimeRange = After$.MODULE$.apply(startTime);
+    mTimeRange = new TimeRangeSpec.From(startTime);
     return this;
   }
 
@@ -147,7 +147,7 @@ public final class TapBuilder {
       final long endTime
   ) {
     Preconditions.checkState(null == mTimeRange, "Time range already set to: " + mTimeRange);
-    mTimeRange = Between$.MODULE$.apply(startTime, endTime);
+    mTimeRange = new TimeRangeSpec.Between(startTime, endTime);
     return this;
   }
 
@@ -158,7 +158,7 @@ public final class TapBuilder {
    */
   public TapBuilder withAllTime() {
     Preconditions.checkState(null == mTimeRange, "Time range already set to: " + mTimeRange);
-    mTimeRange = All$.MODULE$;
+    mTimeRange = TimeRangeSpec.All$.MODULE$;
     return this;
   }
 
@@ -172,7 +172,7 @@ public final class TapBuilder {
       final long exactTime
   ) {
     Preconditions.checkState(null == mTimeRange, "Time range already set to: " + mTimeRange);
-    mTimeRange = At$.MODULE$.apply(exactTime);
+    mTimeRange = new TimeRangeSpec.At(exactTime);
     return this;
   }
 
@@ -181,7 +181,7 @@ public final class TapBuilder {
    *
    * @return the time range from which input values may be read.
    */
-  public TimeRange getTimeRange() {
+  public TimeRangeSpec getTimeRangeSpec() {
     return mTimeRange;
   }
 

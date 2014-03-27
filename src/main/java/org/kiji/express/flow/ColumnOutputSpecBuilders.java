@@ -145,7 +145,7 @@ public final class ColumnOutputSpecBuilders {
     ) {
       Preconditions.checkNotNull(schema, "Schema may not be null.");
       Preconditions.checkState(null == mSchemaSpec, "SchemaSpec already set to: " + mSchemaSpec);
-      mSchemaSpec = SchemaSpec.Generic$.MODULE$.apply(schema);
+      mSchemaSpec = new SchemaSpec.Generic(schema);
       return this;
     }
 
@@ -160,7 +160,7 @@ public final class ColumnOutputSpecBuilders {
     ) {
       Preconditions.checkNotNull(specificRecordClass, "Specific record class may not be null.");
       Preconditions.checkState(null == mSchemaSpec, "SchemaSpec already set to: " + mSchemaSpec);
-      mSchemaSpec = SchemaSpec.Specific$.MODULE$.apply(specificRecordClass);
+      mSchemaSpec = new SchemaSpec.Specific(specificRecordClass);
       return this;
     }
 
@@ -199,7 +199,11 @@ public final class ColumnOutputSpecBuilders {
     public QualifiedColumnOutputSpec build() {
       final KijiColumnName column = Preconditions.checkNotNull(mColumn,
           "Output column may not be null.");
-      return QualifiedColumnOutputSpec.apply(column.getName(), mSchemaSpec);
+      return QualifiedColumnOutputSpec$.MODULE$.apply(
+          column.getFamily(),
+          column.getQualifier(),
+          mSchemaSpec
+      );
     }
   }
 
@@ -317,7 +321,7 @@ public final class ColumnOutputSpecBuilders {
     ) {
       Preconditions.checkNotNull(schema, "Schema may not be null.");
       Preconditions.checkState(null == mSchemaSpec, "Schema spec already set to: " + mSchemaSpec);
-      mSchemaSpec = SchemaSpec.Generic$.MODULE$.apply(schema);
+      mSchemaSpec = new SchemaSpec.Generic(schema);
       return this;
     }
 
@@ -332,7 +336,7 @@ public final class ColumnOutputSpecBuilders {
     ) {
       Preconditions.checkNotNull(specificRecordClass, "Specific record class may not be null.");
       Preconditions.checkState(null == mSchemaSpec, "Schema spec already set to: " + mSchemaSpec);
-      mSchemaSpec = SchemaSpec.Specific$.MODULE$.apply(specificRecordClass);
+      mSchemaSpec = new SchemaSpec.Specific(specificRecordClass);
       return this;
     }
 

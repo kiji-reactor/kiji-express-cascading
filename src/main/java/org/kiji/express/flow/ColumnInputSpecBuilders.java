@@ -149,7 +149,7 @@ public class ColumnInputSpecBuilders {
     ) {
       Preconditions.checkNotNull(schema, "Schema may not be null.");
       Preconditions.checkState(null == mSchemaSpec, "SchemaSpec already set to: " + mSchemaSpec);
-      mSchemaSpec = SchemaSpec.Generic$.MODULE$.apply(schema);
+      mSchemaSpec = new SchemaSpec.Generic(schema);
       return this;
     }
 
@@ -164,7 +164,7 @@ public class ColumnInputSpecBuilders {
     ) {
       Preconditions.checkNotNull(specificRecordClass, "Specific record class may not be null.");
       Preconditions.checkState(null == mSchemaSpec, "SchemaSpec already set to: " + mSchemaSpec);
-      mSchemaSpec = SchemaSpec.Specific$.MODULE$.apply(specificRecordClass);
+      mSchemaSpec = new SchemaSpec.Specific(specificRecordClass);
       return this;
     }
 
@@ -252,8 +252,7 @@ public class ColumnInputSpecBuilders {
       Preconditions.checkState(mColumnFilterSpec == null,
           "Cannot set ColumnFilterSpec to KijiColumnFilter %d, ColumnFilterSpec already set to %d.",
           kijiColumnFilter, mColumnFilterSpec);
-      mColumnFilterSpec = ColumnFilterSpec.
-          KijiColumnFilterColumnFilterSpec$.MODULE$.apply(kijiColumnFilter);
+      mColumnFilterSpec = new ColumnFilterSpec.KijiSchemaColumnFilter(kijiColumnFilter);
       return this;
     }
 
@@ -305,7 +304,7 @@ public class ColumnInputSpecBuilders {
       Preconditions.checkState(mPagingSpec == null,
           "Cannot set PagingSpec since it is already set to %d.",
           mPagingSpec);
-      mPagingSpec = PagingSpec.Cells$.MODULE$.apply(count);
+      mPagingSpec = new PagingSpec.Cells(count);
       return this;
     }
 
@@ -327,7 +326,7 @@ public class ColumnInputSpecBuilders {
       final KijiColumnName column = Preconditions.checkNotNull(mColumn,
           "Input column may not be null.");
       // TODO(shashir): This construct method needs to be implemented in ColumnInputSpec.
-      return QualifiedColumnInputSpec.construct(
+      return QualifiedColumnInputSpec$.MODULE$.construct(
           mColumn,
           mMaxVersions,
           mColumnFilterSpec,
@@ -461,7 +460,7 @@ public class ColumnInputSpecBuilders {
     ) {
       Preconditions.checkNotNull(schema, "Schema may not be null.");
       Preconditions.checkState(null == mSchemaSpec, "SchemaSpec already set to: " + mSchemaSpec);
-      mSchemaSpec = SchemaSpec.Generic$.MODULE$.apply(schema);
+      mSchemaSpec = new SchemaSpec.Generic(schema);
       return this;
     }
 
@@ -476,7 +475,7 @@ public class ColumnInputSpecBuilders {
     ) {
       Preconditions.checkNotNull(specificRecordClass, "Specific record class may not be null.");
       Preconditions.checkState(null == mSchemaSpec, "SchemaSpec already set to: " + mSchemaSpec);
-      mSchemaSpec = SchemaSpec.Specific$.MODULE$.apply(specificRecordClass);
+      mSchemaSpec = new SchemaSpec.Specific(specificRecordClass);
       return this;
     }
 
@@ -564,8 +563,7 @@ public class ColumnInputSpecBuilders {
       Preconditions.checkState(mColumnFilterSpec == null,
           "Cannot set ColumnFilterSpec to KijiColumnFilter %d, ColumnFilterSpec already set to %d.",
           kijiColumnFilter, mColumnFilterSpec);
-      mColumnFilterSpec = ColumnFilterSpec.
-          KijiColumnFilterColumnFilterSpec$.MODULE$.apply(kijiColumnFilter);
+      mColumnFilterSpec = new ColumnFilterSpec.KijiSchemaColumnFilter(kijiColumnFilter);
       return this;
     }
 
@@ -617,7 +615,7 @@ public class ColumnInputSpecBuilders {
       Preconditions.checkState(mPagingSpec == null,
           "Cannot set PagingSpec since it is already set to %d.",
           mPagingSpec);
-      mPagingSpec = PagingSpec.Cells$.MODULE$.apply(count);
+      mPagingSpec = new PagingSpec.Cells(count);
       return this;
     }
 
@@ -639,7 +637,7 @@ public class ColumnInputSpecBuilders {
       final KijiColumnName column = Preconditions.checkNotNull(mColumn,
           "Input column may not be null.");
       // TODO(shashir): This construct method needs to be implemented in ColumnInputSpec.
-      return ColumnFamilyInputSpec.construct(
+      return ColumnFamilyInputSpec$.MODULE$.construct(
           mColumn,
           mMaxVersions,
           mColumnFilterSpec,
